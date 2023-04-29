@@ -1,4 +1,4 @@
-# My Laravel Project
+# Mini-CRM with Laravel vueJs
 
 C'est ma réalisation du projet "mini-crm" une application application web de type SPA développé à l'aide du framework laravel et Vuejs 3 
 

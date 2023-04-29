@@ -4,18 +4,23 @@
       <ul>
         <li>
           <router-link to="/employee">
-            <i class="fas fa-tachometer-alt"></i> Acceuil
+             Acceuil
           </router-link>
         </li>
         <li>
           <router-link to="/employee/update">
-            <i class="fas fa-users"></i> Profil
+             Profil
           </router-link>
         </li>
         <li>
           <router-link to="/employee/company">
-            <i class="fas fa-building"></i> Société
+            Société
           </router-link>
+        </li>
+        <li>
+          <a @click="logout()">
+             Se deconnecter
+          </a>
         </li>
       </ul>
     </nav>
@@ -24,6 +29,19 @@
     </main>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'home employee area',
+  methods: {
+   logout() {
+    localStorage.removeItem('token');
+    this.$router.push('/employee/login')
+   }
+
+  }
+}
+</script>
 
 <style>
 .employee-layout {

@@ -23,9 +23,11 @@
             <option v-for="company in companies" v-bind:key ="company.id" :value="company.id">{{company.name}}</option>
             </select>
         </div>
-          <button type="submit" class="btn btn-primary mt-2 mb-2">Inviter</button>
+          <button type="submit" class="btn btn-primary mt-2 mb-3">Inviter</button>
         </form>
 
+        <input type="text" class="search" v-model="searchEmployee" v-on:keypress="filteringInvitations('employee')" placeholder="Chercher un employée...">
+        <input type="text" class="search" v-model="searchCompany" v-on:keypress="filteringInvitations('Company')" placeholder="Chercher une société...">
 
         <table class="table table-bordered table-hover">
             <table-header :sort-order="params.sortOrder" :sort-by="params.sortBy" @sort="onSort">
@@ -35,7 +37,7 @@
                 <th-column>Action</th-column>
             </table-header>
             <tbody>
-                <tr v-for="invitation in invitations" :key="invitation.id">
+                <tr v-for="invitation in filtredInvitations" :key="invitation.id">
                 <td>{{ invitation.company }}</td>
                 <td>{{ invitation.employee }}</td>
                 <td>{{ invitation.status }}</td>
@@ -61,6 +63,7 @@ export default {
     return {
       companies: [], // Set the initial value of the companies dropdown
       invitations: [], // Set the initial value of the invitations list
+
       invitation: {
         email: '',
         name: '',
@@ -70,6 +73,9 @@ export default {
         sortOrder: 'desc',
         sortBy: 'company_name',
       },
+      searchEmployee: '',
+      searchCompany: '',
+      filtredInvitations: []
     };
   },
   components: {
@@ -117,7 +123,8 @@ export default {
     fetchInvitations() {
         api.get('/api/admin/invitations')
           .then(response => {
-            this.invitations = response.data.invitations
+            this.invitations = response.data.invitations;
+            this.filtredInvitations = response.data.invitations;
           })
           .catch(error => {
             console.log(error)
@@ -133,7 +140,21 @@ export default {
           .catch(error => {
             console.log(error)
           })
-    }
+    },
+    filteringInvitations(isFor) {
+        if (isFor === 'company') {
+            this.searchEmployee = '';
+            this.filtredInvitations = this.invitations.filter(invitation => {
+            return invitation.company.toLowerCase().includes(this.searchCompany.toLowerCase())
+            })
+        } else {
+            this.searchCompany = '';
+            this.filtredInvitations = this.invitations.filter(invitation => {
+            return invitation.employee.toLowerCase().includes(this.searchEmployee.toLowerCase())
+            })
+        }
+        
+    },
     
   },
   mounted() {
@@ -145,11 +166,16 @@ export default {
 </script>
 
 <style>
-/* .admins-list {
-  max-width: 800px;
-  margin: 0 auto;
-} */
 
+.search{
+    width: 300px;
+    padding: 6px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    margin-left: 8px;
+}
 table {
   border-collapse: collapse;
   width: 100%;

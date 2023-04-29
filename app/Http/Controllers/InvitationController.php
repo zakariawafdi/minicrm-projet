@@ -60,6 +60,7 @@ class InvitationController extends Controller
         $history->action = 'Admin "' .Auth::guard('admin')->user()->name.'" a annulé l\'invitation de  "'. $employee->name;
         $history->save();
         $invitation->delete();
+        $employee->delete();
         return response()->json(['message' => 'Invitation deleted successfully']);
     }
 

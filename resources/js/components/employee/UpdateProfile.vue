@@ -51,8 +51,6 @@
 
 <script>
 import api from '../../http/axios.js';
-// import VueToast from 'vue-toast-notification';
-// import 'vue-toast-notification/dist/theme-sugar.css';
 
 export default {
   data() {
@@ -84,10 +82,7 @@ export default {
         api.put('/api/employee/', this.form)
             .then(response => {
             // Handle successful response
-            this.$toast.open({
-              message: 'Operation successful!',
-              type: 'success'
-            });
+            this.$router.push('/employee');
             })
             .catch(error => {
             if (error.response && error.response.status === 422) {

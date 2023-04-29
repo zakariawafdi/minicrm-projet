@@ -46,7 +46,7 @@ export default {
       .then(response => {
         if (response.data.access_token){
           localStorage.setItem('token', response.data.access_token);
-          this.$router.push('/employee/dashboard');
+          this.$router.push('/employee');
         }
         
       })

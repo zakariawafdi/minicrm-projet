@@ -4,28 +4,33 @@
       <ul>
         <li>
           <router-link to="/admin">
-            <i class="fas fa-tachometer-alt"></i> Dashboard
+             Dashboard
           </router-link>
         </li>
         <li>
           <router-link to="/admin/admins">
-            <i class="fas fa-users"></i> Admins
+             Admins
           </router-link>
         </li>
         <li>
           <router-link to="/admin/companies">
-            <i class="fas fa-building"></i> Companies
+             Companies
           </router-link>
         </li>
         <li>
           <router-link to="/admin/invitations">
-            <i class="fas fa-building"></i> Invitations
+             Invitations
           </router-link>
         </li>
         <li>
           <router-link to="/admin/histories">
-            <i class="fas fa-building"></i> Historique
+             Historique
           </router-link>
+        </li>
+        <li>
+          <a @click="logout()">
+             Se deconnecter
+          </a>
         </li>
       </ul>
     </nav>
@@ -34,6 +39,19 @@
     </main>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'home employee area',
+  methods: {
+   logout() {
+    localStorage.removeItem('token');
+    this.$router.push('/admin/login')
+   }
+
+  }
+}
+</script>
 
 <style>
 .admin-layout {
